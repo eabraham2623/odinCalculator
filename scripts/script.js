@@ -1,5 +1,7 @@
 const numberButtons = document.querySelectorAll(".number");
 const display = document.querySelector(".display");
+const clearButton = document.querySelector("#clear");
+const operatorButtons = document.querySelectorAll(".operator");
 
 
 function addClickEventListenerDisplay(clickObject)
@@ -10,6 +12,12 @@ function addClickEventListenerDisplay(clickObject)
     });
 }
 
+function addClickEventListenerDisplayClear(clearButton)
+{
+    clearButton.addEventListener('click', function(event){
+        clearDisplay();
+    })
+}
 
 function addEventListenersToList(list, clickEventListenerFunction)
 {
@@ -30,6 +38,13 @@ function appendNumberToDisplay(number)
         display.innerText = display.innerText + number;    
     }
 }
+
+function clearDisplay()
+{
+    display.innerText = "0";
+}
+
+addClickEventListenerDisplayClear(clearButton);
 
 addEventListenersToList(numberButtons, addClickEventListenerDisplay);
 
