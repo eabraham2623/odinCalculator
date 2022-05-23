@@ -1,3 +1,38 @@
+const numberButtons = document.querySelectorAll(".number");
+const display = document.querySelector(".display");
+
+
+function addClickEventListenerDisplay(clickObject)
+{
+    clickObject.addEventListener('click', function(event) {
+        appendNumberToDisplay(clickObject.innerText);
+        //playOneRound(clickObject.innerText);
+    });
+}
+
+
+function addEventListenersToList(list, clickEventListenerFunction)
+{
+    for (let i = 0; i < list.length; i++)
+    {
+        clickEventListenerFunction(list[i]);
+    }
+}
+
+function appendNumberToDisplay(number)
+{
+    if (display.innerText == "0")
+    {
+        display.innerText = number;
+    }
+    else
+    {
+        display.innerText = display.innerText + number;    
+    }
+}
+
+addEventListenersToList(numberButtons, addClickEventListenerDisplay);
+
 function add(num1, num2)
 {
     return num1 + num2;
@@ -37,8 +72,3 @@ function operate(operator, num1, num2)
         return divide(num1, num2);
     }
 }
-
-console.log(operate("/", 5, 3));
-console.log(operate("+", 5, 3));
-console.log(operate("*", 5, 3));
-console.log(operate("-", 5, 3));
