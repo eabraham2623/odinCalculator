@@ -1,8 +1,15 @@
+const numRegex = new RegExp('\\d');
 const numberButtons = document.querySelectorAll(".number");
 const display = document.querySelector(".display");
 const clearButton = document.querySelector("#clear");
 const operatorButtons = document.querySelectorAll(".operator");
 
+function addClickEventListenerDisplayOperator(operatorButton)
+{
+    operatorButton.addEventListener('click', function(event){
+        appendOperatorToDisplay(operatorButton.innerText);
+    })
+}
 
 function addClickEventListenerDisplay(clickObject)
 {
@@ -39,6 +46,19 @@ function appendNumberToDisplay(number)
     }
 }
 
+function appendOperatorToDisplay(operator)
+{
+    if (isDisplayLastCharacterANumber())
+    {
+        display.innerText = `${display.innerText} ${operator} `;
+    }
+}
+
+function isDisplayLastCharacterANumber()
+{
+    return numRegex.test(display.innerText.slice(-1));
+}
+
 function clearDisplay()
 {
     display.innerText = "0";
@@ -47,6 +67,8 @@ function clearDisplay()
 addClickEventListenerDisplayClear(clearButton);
 
 addEventListenersToList(numberButtons, addClickEventListenerDisplay);
+
+addEventListenersToList(operatorButtons, addClickEventListenerDisplayOperator);
 
 function add(num1, num2)
 {
