@@ -85,18 +85,6 @@ function saveNumberAndOperator(operator)
     }
 }
 
-function hasPreviousOperator()
-{
-    if (previousOperator !== "undefined")
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 function evaluate()
 {
     let evaluatingOperator = (previousOperator !== "undefined") ? previousOperator : currentOperator;
