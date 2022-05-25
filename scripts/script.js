@@ -1,21 +1,28 @@
 const numRegex = new RegExp('\\d');
+const secondNumRegex = new RegExp('(\\+|\\-|\\*|\\/)\\s(\\d+)');
 const numberButtons = document.querySelectorAll(".number");
 const display = document.querySelector(".display");
 const clearButton = document.querySelector("#clear");
 const operatorButtons = document.querySelectorAll(".operator");
 
+let currentValue;
+let currentOperator;
+let previousOperator;
+
 function addClickEventListenerDisplayOperator(operatorButton)
 {
     operatorButton.addEventListener('click', function(event){
-        appendOperatorToDisplay(operatorButton.innerText);
+        saveNumberAndOperator(operatorButton.textContent)
+        appendOperatorToDisplay(operatorButton.textContent);
+        evaluate();
     })
 }
 
 function addClickEventListenerDisplay(clickObject)
 {
     clickObject.addEventListener('click', function(event) {
-        appendNumberToDisplay(clickObject.innerText);
-        //playOneRound(clickObject.innerText);
+        appendNumberToDisplay(clickObject.textContent);
+        //playOneRound(clickObject.textContent);
     });
 }
 
@@ -36,13 +43,13 @@ function addEventListenersToList(list, clickEventListenerFunction)
 
 function appendNumberToDisplay(number)
 {
-    if (display.innerText == "0")
+    if (display.textContent == "0")
     {
-        display.innerText = number;
+        display.textContent = number;
     }
     else
     {
-        display.innerText = display.innerText + number;    
+        display.textContent = display.textContent + number;    
     }
 }
 
@@ -50,18 +57,59 @@ function appendOperatorToDisplay(operator)
 {
     if (isDisplayLastCharacterANumber())
     {
-        display.innerText = `${display.innerText} ${operator} `;
+        display.textContent = `${display.textContent} ${operator} `;
     }
 }
 
 function isDisplayLastCharacterANumber()
 {
-    return numRegex.test(display.innerText.slice(-1));
+    return numRegex.test(display.textContent.slice(-1));
 }
 
 function clearDisplay()
 {
-    display.innerText = "0";
+    display.textContent = "0";
+}
+
+function saveNumberAndOperator(operator)
+{
+    currentValue = parseInt(display.textContent);
+    if (currentOperator === "undefined")
+    {   
+        currentOperator = operator;
+    }
+    else 
+    {
+        previousOperator = currentOperator;
+        currentOperator = operator
+    }
+}
+
+function hasPreviousOperator()
+{
+    if (previousOperator !== "undefined")
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function evaluate()
+{
+    let evaluatingOperator = (previousOperator !== "undefined") ? previousOperator : currentOperator;
+    if (display.textContent.match(secondNumRegex) != null)
+    {
+        let match = display.textContent.match(secondNumRegex);
+        secondNumber = parseInt(match[2]);
+        
+        currentValue = operate(evaluatingOperator, currentValue, secondNumber);
+        
+        display.textContent = `${currentValue} ${currentOperator} `;
+    }
+
 }
 
 addClickEventListenerDisplayClear(clearButton);
