@@ -60,6 +60,7 @@ function appendNumberToDisplay(number)
     else
     {
         display.textContent = display.textContent + number;    
+        isPreviousEqual = false;
     }
 }
 
