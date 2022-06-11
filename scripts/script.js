@@ -52,7 +52,7 @@ function addEventListenersToList(list, clickEventListenerFunction)
 
 function appendNumberToDisplay(number)
 {
-    if (display.textContent == "0" || isPreviousEqual)
+    if ((display.textContent == "0" || isPreviousEqual) && isDisplayLastCharacterANumber())
     {
         display.textContent = number;
         isPreviousEqual = false;
