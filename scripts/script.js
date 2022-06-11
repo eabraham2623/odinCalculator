@@ -4,17 +4,19 @@ const numberButtons = document.querySelectorAll(".number");
 const display = document.querySelector(".display");
 const clearButton = document.querySelector("#clear");
 const operatorButtons = document.querySelectorAll(".operator");
+const equalsButton = document.querySelector("#equals");
 
 let currentValue;
 let currentOperator;
 let previousOperator;
+let isPreviousEqual = false;
 
 function addClickEventListenerDisplayOperator(operatorButton)
 {
     operatorButton.addEventListener('click', function(event){
         saveNumberAndOperator(operatorButton.textContent)
         appendOperatorToDisplay(operatorButton.textContent);
-        evaluate();
+        evaluate(operatorButton.textContent);
     })
 }
 
@@ -24,6 +26,13 @@ function addClickEventListenerDisplay(clickObject)
         appendNumberToDisplay(clickObject.textContent);
         //playOneRound(clickObject.textContent);
     });
+}
+
+function addClickEventListenerEqualsOperate(equalsButton)
+{
+    equalsButton.addEventListener('click', function(event){
+        evaluate(equalsButton.textContent);
+    })
 }
 
 function addClickEventListenerDisplayClear(clearButton)
@@ -43,9 +52,10 @@ function addEventListenersToList(list, clickEventListenerFunction)
 
 function appendNumberToDisplay(number)
 {
-    if (display.textContent == "0")
+    if (display.textContent == "0" || isPreviousEqual)
     {
         display.textContent = number;
+        isPreviousEqual = false;
     }
     else
     {
@@ -85,22 +95,32 @@ function saveNumberAndOperator(operator)
     }
 }
 
-function evaluate()
+function evaluate(operator)
 {
-    let evaluatingOperator = (previousOperator !== "undefined") ? previousOperator : currentOperator;
+    //let evaluatingOperator = (previousOperator !== "undefined") ? previousOperator : currentOperator;
     if (display.textContent.match(secondNumRegex) != null)
     {
         let match = display.textContent.match(secondNumRegex);
         secondNumber = parseInt(match[2]);
+        let evaluatingOperator = match[1];
         
         currentValue = operate(evaluatingOperator, currentValue, secondNumber);
         
-        display.textContent = `${currentValue} ${currentOperator} `;
+        if (operator == "=")
+        {
+            display.textContent = `${currentValue}`;
+            isPreviousEqual = true;
+        }
+        else
+        {
+            display.textContent = `${currentValue} ${currentOperator} `;
+        }
     }
 
 }
 
 addClickEventListenerDisplayClear(clearButton);
+addClickEventListenerEqualsOperate(equalsButton);
 
 addEventListenersToList(numberButtons, addClickEventListenerDisplay);
 
