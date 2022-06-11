@@ -1,0 +1,76 @@
+.calculator {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    padding: 150px;
+    grid-gap: 20px;
+}
+.display {
+    grid-column: 1 / span 4;
+    text-align: right;
+    order: -1;
+}
+#seven
+{
+    order: 0;
+}
+#eight
+{
+    order: 1;
+}
+#nine
+{
+    order: 2;
+}
+#divide
+{
+    order: 3;
+}
+#four
+{
+    order: 4;
+}
+#five
+{
+    order: 5;
+}
+#six
+{
+    order: 6;
+}
+#multiply
+{
+    order: 7;
+}
+#one
+{
+    order:8
+}
+#two
+{
+    order: 9;
+}
+#three
+{
+    order: 10;
+}
+#plus
+{
+    order: 11;
+}
+#zero
+{
+    order: 12;
+}
+#clear
+{
+    order: 13;
+}
+#equals
+{
+    order: 14;
+}
+#minus
+{
+    order: 15;
+}
