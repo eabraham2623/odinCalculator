@@ -11,10 +11,16 @@ button:focus
 
 .calculator-container
 {
-    padding: 100px;
+    padding: 65px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.title
+{
+    padding: 10px;
+    text-align: center;
 }
 
 .display 
@@ -54,6 +60,12 @@ button:focus
     border-radius: 8px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
     font-size: medium;
+}
+
+#clear, #equals
+{
+    background-color: #f18f01;
+    color: #F8F8FF
 }
 
 #seven
